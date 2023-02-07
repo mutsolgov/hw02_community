@@ -7,18 +7,16 @@ TEN = 10
 
 
 def index(request):
-    template = 'posts/index.html'
-    posts = Post.objects.order_by('-pub_date')[:TEN]
+    posts = Post.objects.all()[:TEN]
     context = {'posts': posts}
-    return render(request, template, context)
+    return render(request, 'posts/index.html', context)
 
 
 def group_posts(request, slug):
-    template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.order_by('-pub_date')[:TEN]
+    posts = group.posts.all()[:TEN]
     context = {
         'group': group,
         'posts': posts
     }
-    return render(request, template, context)
+    return render(request, 'posts/group_list.html', context)
